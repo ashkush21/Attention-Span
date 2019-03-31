@@ -1,0 +1,82 @@
+/*canvas {
+  border: 1px solid black;
+}*/
+body{
+  margin-top: 0;
+  background-color: rgb(211, 244, 255);
+}
+
+.invisible {
+  display: none;
+}
+.text-center {
+  text-align: center;
+}
+div {
+  margin: 10px;
+}
+.center-block {
+  display: block;
+  margin: auto;
+}
+label {
+  padding-right: 10px;
+  width: 25%;
+  vertical-align: top;
+  font: 16px 'Lucida Grande', sans-serif;
+}
+
+iframe {
+  float: left;
+  width: 300px;
+  height: 200px;
+}
+
+.buttons {
+  padding: 1rem;
+  background: #f06d06;
+  float: left;
+}
+
+#videoContainer{
+  margin-left: 200px; 
+  padding-top:0;
+  /*position: absolute;*/
+  /*z-index: 1;*/
+}
+
+#videoContainer video{
+  width: 700px;
+  height: 400px;
+  box-shadow: -7px -7px 3px #6d6d6d;
+  /*filter: blur(125px);   */
+}
+/*
+#videoCover {
+  position: absolute;
+  z-index: 0;
+  background-color: black;
+  margin-left: 200px; 
+  padding-top:0;
+  width: 700px;
+  height: 400px;
+}
+*/
+h1 {
+  text-align: center;
+  font-family: 'Pacifico', cursive;
+  font-size: 50px;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+  text-shadow: -5px -5px 3px #6d6d6d;
+
+}
+
+#rightCirlce{
+  float: right;
+ }
+
+#leftCircle{
+  float:left;
+}

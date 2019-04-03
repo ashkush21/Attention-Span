@@ -208,7 +208,7 @@ function count(x){
   }
   else{
     counter+=x;
-    if(counter>=5){
+    if(counter>=8){
       console.log("pause");
       myVideo.pause();
       Lcircle.setAttribute('fill', 'red');
@@ -216,7 +216,7 @@ function count(x){
       // videoContainer.setAttribute('filter', 'blur(125px)');
       // videoCover.setAttribute('z-index', 1);
     }
-    counter%=5;
+    counter%=8;
   }
 
 }

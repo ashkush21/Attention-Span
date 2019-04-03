@@ -41,6 +41,9 @@ iframe {
 #videoContainer{
   margin-left: 200px; 
   padding-top:0;
+  width:700px;
+  margin:auto;
+  align-self: center;
   /*position: absolute;*/
   /*z-index: 1;*/
 }

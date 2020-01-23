@@ -195,16 +195,27 @@ function drawResults(ctx, results, color, size) {
     ctx.strokeRect(rect.x*xRatio, rect.y*yRatio, rect.width*xRatio, rect.height*yRatio);
   }
 }
+
+// default graph plot
+Plotly.plot('graph', [{
+      y:[0],
+      type:'line'
+    }]);
+
+
 let counter=0;
-function count(x){
+async function count(x){
   if(x==0){
     console.log("Let it play.")
     counter=0;
     myVideo.play();
     Lcircle.setAttribute('fill', 'green');
     Rcircle.setAttribute('fill', 'green');
-    // videoContainer.setAttribute('filter', 'blur(0)');
-    //   videoCover.setAttribute('z-index', 0);
+
+    // plot graph
+    // await plotpoint(x)
+    // console.log(x);
+    Plotly.extendTraces('graph', { y:[[x]]}, [0]);
   }
   else{
     counter+=x;
@@ -213,13 +224,21 @@ function count(x){
       myVideo.pause();
       Lcircle.setAttribute('fill', 'red');
       Rcircle.setAttribute('fill', 'red');
-      // videoContainer.setAttribute('filter', 'blur(125px)');
-      // videoCover.setAttribute('z-index', 1);
     }
     counter%=8;
+    // await plotpoint(x)
+    Plotly.extendTraces('graph', { y:[[x]]}, [0]);
   }
 
 }
+
+
+// function plotpoint(){
+//   Plotly.extendTraces('graph', { y:[[x]]}, [0]);
+//   return new Promise.resolve(true);
+// }
+
+
 
 function stopVideoProcessing() {
   if (src != null && !src.isDeleted()) src.delete();

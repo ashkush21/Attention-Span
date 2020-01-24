@@ -1,9 +1,12 @@
 /*canvas {
   border: 1px solid black;
 }*/
-body{
-  margin-top: 0;
-  background-color: rgb(211, 244, 255);
+
+.heading-primary {
+  font-family: 'Source Sans Pro', sans-serif;
+  letter-spacing: 0.1em;
+  padding: 1em;
+  text-transform: uppercase;
 }
 
 .invisible {
@@ -51,29 +54,7 @@ iframe {
 #videoContainer video{
   width: 700px;
   height: 400px;
-  box-shadow: -7px -7px 3px #6d6d6d;
   /*filter: blur(125px);   */
-}
-/*
-#videoCover {
-  position: absolute;
-  z-index: 0;
-  background-color: black;
-  margin-left: 200px; 
-  padding-top:0;
-  width: 700px;
-  height: 400px;
-}
-*/
-h1 {
-  text-align: center;
-  font-family: 'Pacifico', cursive;
-  font-size: 50px;
-  padding-bottom: 0;
-  margin-bottom: 0;
-  margin-top: 0;
-  text-shadow: -5px -5px 3px #6d6d6d;
-
 }
 
 #rightCirlce{

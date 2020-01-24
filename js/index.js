@@ -274,11 +274,17 @@ function drawResults(ctx, results, color, size) {
   }
 }
 
+var layout0 = {
+  title: {
+    text: 'Time vs Face Attention Span'
+  }
+}
+
 // default graph plot
 Plotly.plot('graph', [{
       y:[0],
       type:'line'
-    }]);
+    }], layout0);
 
 
 let counter=0;
@@ -365,10 +371,13 @@ var cont = 0;
 var ampArr = [];
 var points = 0;
 
+  var layout = {
+    title: 'Time vs Amplitude'
+  }
   Plotly.plot('chart',[{
     y :[0],
     type: 'line'
-  }]);
+  }], layout);
 
 
   function cmean(arr){

@@ -1,8 +1,12 @@
 let videoWidth, videoHeight;
 
+// Statistical data
+let totalPlay=0, totalPause=0, accuracy;
+
+
 // whether streaming video from the camera.
 let streaming = false;
-
+let sampling=true;
 let video = document.getElementById('video');
 let canvasOutput = document.getElementById('canvasOutput');
 let canvasOutputCtx = canvasOutput.getContext('2d');
@@ -12,6 +16,58 @@ let Lcircle = document.getElementById('Lcircle');
 let Rcircle = document.getElementById('Rcircle');
 // let videoContainer = document.getElementById('videoContainer');
 // let videoCover = document.getElementById('videoCover');
+
+
+
+
+// function to check whether the user has changed the tab or not
+
+
+  
+// "librairie" de gestion de la visibilité
+//  var visible = vis(); // donne l'état courant
+//  vis(function(){});   // définit un handler pour les changements de visibilité
+var vis = (function(){
+  var stateKey, eventKey, keys = {
+    hidden: "visibilitychange",
+    webkitHidden: "webkitvisibilitychange",
+    mozHidden: "mozvisibilitychange",
+    msHidden: "msvisibilitychange"
+  };
+  for (stateKey in keys) {
+    if (stateKey in document) {
+      eventKey = keys[stateKey];
+      break;
+    }
+  }
+  return function(c) {
+    if (c) {
+      document.addEventListener(eventKey, c);
+      //document.addEventListener("blur", c);
+      //document.addEventListener("focus", c);
+    }
+    return !document[stateKey];
+  }
+})();
+
+// vis(function(){
+//   // document.title = vis() ? 'Visible' : 'Not visible';
+//   // console.log(new Date, 'visible ?', vis());
+//   if(!vis()){
+//     // prompt("You swtched to another tab");
+//     // document.getElementById("heading").innerHTML = "You changed the tab!"
+
+//   }
+// });
+
+
+
+
+
+////////////////////// 
+
+
+
 
  var tag = document.createElement('script');
 
@@ -54,7 +110,24 @@ function changeColor(color){
   screenColor.style.background = color;
 }
 
+// stop playing the video
+function stopPlaying(){
+  stream.getTracks()[0].stop();
+  sampling = false;
+  accuracy = totalPlay/(totalPause+totalPlay);
+  console.log(accuracy);
+  // myVideo.pause();
+
+  // navigator.mediaDevices.getUserMedia({video: true, audio: false})
+  //   .then(function(s) {
+  //   video.pause();
+  // })
+
+}
+
+
 function startCamera() {
+
   if (streaming) return;
   navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(function(s) {
@@ -65,6 +138,9 @@ function startCamera() {
     .catch(function(err) {
     console.log("An error occured! " + err);
   });
+
+  // document.getElementById("")  
+
 
   video.addEventListener("canplay", function(ev){
     if (!streaming) {
@@ -120,69 +196,71 @@ function startVideoProcessing() {
 }
 
 function processVideo() {
-  stats.begin();
-  canvasInputCtx.drawImage(video, 0, 0, videoWidth, videoHeight);
-  let imageData = canvasInputCtx.getImageData(0, 0, videoWidth, videoHeight);
-  srcMat.data.set(imageData.data);
-  cv.cvtColor(srcMat, grayMat, cv.COLOR_RGBA2GRAY);
-  let faces = [];
-  let eyes = [];
-  let size;
-  if (true) {
-    let faceVect = new cv.RectVector();
-    let faceMat = new cv.Mat();
-    if (false) {
-      cv.pyrDown(grayMat, faceMat);
-      size = faceMat.size();
+  if(sampling){
+    stats.begin();
+    canvasInputCtx.drawImage(video, 0, 0, videoWidth, videoHeight);
+    let imageData = canvasInputCtx.getImageData(0, 0, videoWidth, videoHeight);
+    srcMat.data.set(imageData.data);
+    cv.cvtColor(srcMat, grayMat, cv.COLOR_RGBA2GRAY);
+    let faces = [];
+    let eyes = [];
+    let size;
+    if (true) {
+      let faceVect = new cv.RectVector();
+      let faceMat = new cv.Mat();
+      if (false) {
+        cv.pyrDown(grayMat, faceMat);
+        size = faceMat.size();
+      } else {
+        cv.pyrDown(grayMat, faceMat);
+        cv.pyrDown(faceMat, faceMat);
+        size = faceMat.size();
+      }
+      faceClassifier.detectMultiScale(faceMat, faceVect);
+      for (let i = 0; i < faceVect.size(); i++) {
+        let face = faceVect.get(i);
+        faces.push(new cv.Rect(face.x, face.y, face.width, face.height));
+        if (false) {
+          let eyeVect = new cv.RectVector();
+          let eyeMat = faceMat.getRoiRect(face);
+          eyeClassifier.detectMultiScale(eyeMat, eyeVect);
+          for (let i = 0; i < eyeVect.size(); i++) {
+            let eye = eyeVect.get(i);
+            eyes.push(new cv.Rect(face.x + eye.x, face.y + eye.y, eye.width, eye.height));
+          }
+          eyeMat.delete();
+          eyeVect.delete();
+        }
+      }
+      if (faceVect.size()>0){
+        count(0);
+      }
+      else{
+        count(1);
+      }
+      faceMat.delete();
+      faceVect.delete();
     } else {
-      cv.pyrDown(grayMat, faceMat);
-      cv.pyrDown(faceMat, faceMat);
-      size = faceMat.size();
-    }
-    faceClassifier.detectMultiScale(faceMat, faceVect);
-    for (let i = 0; i < faceVect.size(); i++) {
-      let face = faceVect.get(i);
-      faces.push(new cv.Rect(face.x, face.y, face.width, face.height));
       if (false) {
         let eyeVect = new cv.RectVector();
-        let eyeMat = faceMat.getRoiRect(face);
+        let eyeMat = new cv.Mat();
+        cv.pyrDown(grayMat, eyeMat);
+        size = eyeMat.size();
         eyeClassifier.detectMultiScale(eyeMat, eyeVect);
         for (let i = 0; i < eyeVect.size(); i++) {
           let eye = eyeVect.get(i);
-          eyes.push(new cv.Rect(face.x + eye.x, face.y + eye.y, eye.width, eye.height));
+          eyes.push(new cv.Rect(eye.x, eye.y, eye.width, eye.height));
         }
         eyeMat.delete();
         eyeVect.delete();
       }
     }
-    if (faceVect.size()>0){
-      count(0);
-    }
-    else{
-      count(1);
-    }
-    faceMat.delete();
-    faceVect.delete();
-  } else {
-    if (false) {
-      let eyeVect = new cv.RectVector();
-      let eyeMat = new cv.Mat();
-      cv.pyrDown(grayMat, eyeMat);
-      size = eyeMat.size();
-      eyeClassifier.detectMultiScale(eyeMat, eyeVect);
-      for (let i = 0; i < eyeVect.size(); i++) {
-        let eye = eyeVect.get(i);
-        eyes.push(new cv.Rect(eye.x, eye.y, eye.width, eye.height));
-      }
-      eyeMat.delete();
-      eyeVect.delete();
-    }
+    // canvasOutputCtx.drawImage(canvasInput, 0, 0, videoWidth, videoHeight);
+    // drawResults(canvasOutputCtx, faces, 'red', size);
+    // drawResults(canvasOutputCtx, eyes, 'yellow', size);
+    stats.end();
+    requestAnimationFrame(processVideo);
   }
-  // canvasOutputCtx.drawImage(canvasInput, 0, 0, videoWidth, videoHeight);
-  // drawResults(canvasOutputCtx, faces, 'red', size);
-  // drawResults(canvasOutputCtx, eyes, 'yellow', size);
-  stats.end();
-  requestAnimationFrame(processVideo);
 }
 
 function drawResults(ctx, results, color, size) {
@@ -211,11 +289,13 @@ async function count(x){
     myVideo.play();
     Lcircle.setAttribute('fill', 'green');
     Rcircle.setAttribute('fill', 'green');
-
+    totalPlay += 1;  
     // plot graph
     // await plotpoint(x)
     // console.log(x);
-    Plotly.extendTraces('graph', { y:[[x]]}, [0]);
+    if(sampling){
+    Plotly.extendTraces('graph', { y:[[1]]}, [0]);
+    }
   }
   else{
     counter+=x;
@@ -224,10 +304,13 @@ async function count(x){
       myVideo.pause();
       Lcircle.setAttribute('fill', 'red');
       Rcircle.setAttribute('fill', 'red');
+      if(sampling){
+        Plotly.extendTraces('graph', { y:[[0]]}, [0]);
+      }
+      totalPause += 1;
     }
     counter%=8;
     // await plotpoint(x)
-    Plotly.extendTraces('graph', { y:[[x]]}, [0]);
   }
 
 }
@@ -268,3 +351,173 @@ function opencvIsReady() {
   initUI();
   startCamera();
 }
+
+
+
+
+
+// noise detection
+
+window.onload = function() {
+  var context = new AudioContext();
+  // Setup all nodes
+var cont = 0;
+var ampArr = [];
+var points = 0;
+
+  Plotly.plot('chart',[{
+    y :[0],
+    type: 'line'
+  }]);
+
+
+  function cmean(arr){
+
+    mean = 0;
+
+    for (var i = arr.length - 1; i >= 0; i--) {
+      mean+=arr[i];
+    }
+
+    mean/=arr.length;
+
+    return mean
+
+  }
+
+
+  function calc(){
+
+    var mean = 0.0;
+    var stdv = 0.0;
+
+    for (var i = ampArr.length - 1; i >= 0; i--) {
+      mean+=ampArr[i];
+    }
+
+    mean = mean/ampArr.length;
+
+    for (var i =ampArr.length - 1; i >= 0; i--) {
+     stdv += (ampArr[i] - mean)*(ampArr[i] - mean);
+    }
+
+    stdv/= ampArr.length;
+
+    var diff = (cmean(ampArr.slice(Math.max(ampArr.length - 10, 0)))- mean);
+
+    if(diff*diff >= stdv)points++;
+
+
+  }
+
+  function processAudio(e) {
+
+  var buffer = e.inputBuffer.getChannelData(0);
+  var out = e.outputBuffer.getChannelData(0);
+  var amp = 0;
+
+  // Iterate through buffer to get the max amplitude for this frame
+  for (var i = 0; i < buffer.length; i++) {
+    var loud = Math.abs(buffer[i]);
+    if(loud > amp) {
+      amp = loud;
+    }
+    // write input samples to output unchanged
+    out[i] = buffer[i];
+  }
+
+  // set the svg circle's radius according to the audio's amplitude
+  // circle.setAttribute('r',20 + (amp * 15*amp*amp));
+
+  if(cont<500){
+
+    cont++;
+
+    Plotly.extendTraces('chart', { y:[[amp]] }, [0]);
+
+    ampArr.push(amp);
+
+    calc();
+
+
+  }
+
+
+  if(cont == 500){
+    cont++;
+    points/=ampArr.length;
+    console.log(points);
+  }
+ 
+  // set the circle's color according to the audio's amplitude
+  // var color = Math.round(amp * 255);
+  // color = 'rgb(' + color + ',' + 0 + ',' + color + ')';
+  // circle.setAttribute('fill',color);
+}
+
+
+navigator.mediaDevices.getUserMedia({ audio: true })
+  .then(stream => {
+    const mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.start();
+
+    const audioChunks = [];
+    mediaRecorder.addEventListener("dataavailable", event => {
+      audioChunks.push(event.data);
+    });
+
+    mediaRecorder.addEventListener("stop", () => {
+      const audioBlob = new Blob(audioChunks);
+      const audioUrl = URL.createObjectURL(audioBlob);
+      
+      // var circle = document.getElementById('circle');
+
+  // Add an audio element
+  var audio = new Audio(audioUrl);
+  audio.controls = true;
+  audio.preload = true;
+  document.body.appendChild(audio);
+
+
+  audio.addEventListener('canplaythrough',function() {
+    var node = context.createMediaElementSource(audio);
+
+    // create a node that will handle the animation, but won't alter the audio
+    // in any way
+    var processor =  context.createScriptProcessor(2048, 1, 1);
+    processor.onaudioprocess = processAudio;
+
+    // connect the audio element to the node responsible for the animation
+    node.connect(processor);
+
+    // connect the "animation" node to the output
+    processor.connect(context.destination);
+
+    // play the sound
+   audio.play();
+  });
+
+
+
+    });
+
+    
+
+    setTimeout(() => {
+      mediaRecorder.stop();
+
+
+    }, 9000);
+  });
+
+
+}
+
+
+
+// Here's where most of the work happens
+
+
+
+////////////////////////////// 
+

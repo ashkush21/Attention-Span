@@ -116,6 +116,7 @@ function stopPlaying(){
   sampling = false;
   accuracy = totalPlay/(totalPause+totalPlay);
   console.log(accuracy);
+  document.getElementById("accuracy").innerHTML = accuracy;
   // myVideo.pause();
 
   // navigator.mediaDevices.getUserMedia({video: true, audio: false})
@@ -274,11 +275,17 @@ function drawResults(ctx, results, color, size) {
   }
 }
 
+var layout0 = {
+  title: {
+    text: 'Time vs Face Attention Span'
+  }
+}
+
 // default graph plot
 Plotly.plot('graph', [{
       y:[0],
       type:'line'
-    }]);
+    }], layout0);
 
 
 let counter=0;
@@ -365,10 +372,13 @@ var cont = 0;
 var ampArr = [];
 var points = 0;
 
+  var layout = {
+    title: 'Time vs Amplitude'
+  }
   Plotly.plot('chart',[{
     y :[0],
     type: 'line'
-  }]);
+  }], layout);
 
 
   function cmean(arr){
@@ -429,7 +439,7 @@ var points = 0;
   // set the svg circle's radius according to the audio's amplitude
   // circle.setAttribute('r',20 + (amp * 15*amp*amp));
 
-  if(cont<500){
+  if(cont<215){
 
     cont++;
 
@@ -443,9 +453,11 @@ var points = 0;
   }
 
 
-  if(cont == 500){
+  if(cont == 215){
     cont++;
     points/=ampArr.length;
+     document.getElementById("audio_quality").innerHTML = points;
+
     console.log(points);
   }
  
@@ -519,5 +531,4 @@ navigator.mediaDevices.getUserMedia({ audio: true })
 
 
 
-////////////////////////////// 
-
+//////////////////////////////

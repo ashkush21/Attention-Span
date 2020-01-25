@@ -1,5 +1,5 @@
-* **This prototype uses pretrained model of OpenCV.js to recognize face in the camera frame.
-* **Follow the following steps to run the project:
+* **This prototype uses pretrained model of OpenCV.js to recognize face in the camera frame.**
+* **Follow the following steps to run the project:**
     * Open index.html file and then wait for the browser(preferably firefox) to ask camera and microphone permission.
     * Click allow and then wait for few seconds for the video to start playing automatically after detecting you face.
 

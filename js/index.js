@@ -1,7 +1,7 @@
 let videoWidth, videoHeight;
 
 // Statistical data
-let totalPlay=0, totalPause=0, accuracy;
+let totalPlay=0, totalPause=0, accuracy, totalTimesTabSwitched = 0;
 
 
 // whether streaming video from the camera.
@@ -50,15 +50,16 @@ var vis = (function(){
   }
 })();
 
-// vis(function(){
-//   // document.title = vis() ? 'Visible' : 'Not visible';
-//   // console.log(new Date, 'visible ?', vis());
-//   if(!vis()){
-//     // prompt("You swtched to another tab");
-//     // document.getElementById("heading").innerHTML = "You changed the tab!"
+vis(function(){
+  // document.title = vis() ? 'Visible' : 'Not visible';
+  // console.log(new Date, 'visible ?', vis());
+  if(!vis()){
+    totalTimesTabSwitched+=1;
+    // prompt("You swtched to another tab");
+    // document.getElementById("heading").innerHTML = "You changed the tab!"
 
-//   }
-// });
+  }
+});
 
 
 
@@ -93,8 +94,7 @@ var vis = (function(){
     var pauseButton = document.getElementById("pause-button");
 
       // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-    playButton.addEventListener("click", function() {
+      function onPlayerReady(event) {    playButton.addEventListener("click", function() {
         player.playVideo();
     });
 
@@ -115,8 +115,10 @@ function stopPlaying(){
   stream.getTracks()[0].stop();
   sampling = false;
   accuracy = totalPlay/(totalPause+totalPlay);
+  accuracy = accuracy.toFixed(5);
   console.log(accuracy);
   document.getElementById("accuracy").innerHTML = accuracy;
+  document.getElementById("tab_switch").innerHTML = totalTimesTabSwitched;
   // myVideo.pause();
 
   // navigator.mediaDevices.getUserMedia({video: true, audio: false})
@@ -282,10 +284,67 @@ var layout0 = {
 }
 
 // default graph plot
-Plotly.plot('graph', [{
+ var Gd2;
+var Gd;
+ Plotly.plot('graph', [{
       y:[0],
       type:'line'
-    }], layout0);
+    }], layout0).then(
+    function(gd)
+     {
+      Gd = gd;
+    });
+
+var doc = new jsPDF()
+// var doc2 = new jsPDF()
+
+function convert_PDF(){
+    var imgData; 
+
+    var p1 =Plotly.toImage(Gd,{height:840 ,width:900})
+       .then(
+           function(url)
+       {    imgData = url;
+
+
+            console.log(imgData);
+            doc.setFontSize(25)
+            doc.text(10, 25, 'DART - Detection of Attention span in Real Time')
+            doc.addImage(imgData, 'JPEG', 15, 40, 70, 90)
+            // doc.save("test.pdf");
+           // img_jpg.attr("src", url);
+           // return Plotly.toImage(gd,{format:'jpeg',height:400,width:400});
+       }
+       );
+
+
+       var p2 = Plotly.toImage(Gd2,{height:840 ,width:900})
+       .then(
+           function(url)
+       {    imgData = url;
+
+
+            console.log(url);
+            doc.setFontSize(15)
+            doc.addImage(imgData, 'JPEG', 110, 40, 70, 90)
+            doc.text(25, 130, "Accuracy:" + document.getElementById("accuracy").innerHTML);
+            doc.text(130, 130, "audio_quality:" + document.getElementById("audio_quality").innerHTML);
+            doc.text(45, 150, "Total number of times tab switched: " + totalTimesTabSwitched.toString());
+            // doc.save("test.pdf");
+           // img_jpg.attr("src", url);
+           // return Plotly.toImage(gd,{format:'jpeg',height:400,width:400});
+       }
+       );
+
+       console.log(p1);
+       Promise.all([p1,p2]).then((val)=>{doc.save("tex.pdf");
+        // doc.save("oppo.pdf");
+       });
+
+
+
+}
+
 
 
 let counter=0;
@@ -375,10 +434,11 @@ var points = 0;
   var layout = {
     title: 'Time vs Amplitude'
   }
+ 
   Plotly.plot('chart',[{
     y :[0],
     type: 'line'
-  }], layout);
+  }], layout).then((gd)=>{Gd2 = gd;});
 
 
   function cmean(arr){
@@ -456,7 +516,7 @@ var points = 0;
   if(cont == 215){
     cont++;
     points/=ampArr.length;
-     document.getElementById("audio_quality").innerHTML = points;
+     document.getElementById("audio_quality").innerHTML = points.toFixed(5);
 
     console.log(points);
   }

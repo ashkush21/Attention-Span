@@ -14,7 +14,7 @@
 
 **Below is the demo video of the project**
 
-![Click here to watch](./Presentation-and-QnA/Presentation-video.mp4?raw=true)
+![[Click here to watch](./Presentation-and-QnA/video_cover.png)](https://youtu.be/TLY_2xVosmM)
 
 
 

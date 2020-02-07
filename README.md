@@ -14,7 +14,7 @@
 
 **Below is the demo video of the project**
 
-<video src="/Presentation-and-QnA/Presentation-video.mp4" width="320" height="200" controls preload></video>
+![Click here to watch](./Presentation-and-QnA/Presentation-video.mp4?raw=true)
 
 
 

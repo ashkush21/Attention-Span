@@ -6,21 +6,25 @@
 
 * The playback of the video is controlled by the presence of face in the camera frame.
 * There are two graphs on the web page showing the time for which the user was attentive and another shows the noise level       around the user.
-* When you click the stop button the attention percentage and the noise ratio is displayed.
+* When you click the stop button the attention percentage and the noise ratio are calculated and displayed.
+* There is a button to print the report for the user. When that button is clicked a report in pdf format is available to download.
+* The above information are there in pdf format, i.e. both the graphs and the calculated parameters.
+
+
 
 Project Developers - 
 
-![Image](/Presentation-and-QnA/photos/Ashish.jpg)
+<img src="/Presentation-and-QnA/photos/Ashish.jpg" width="300" height="200" />
 * Ashish Kushwaha 
-![Image](/Presentation-and-QnA/photos/Somil.jpeg)
+<img src="/Presentation-and-QnA/photos/Somil.jpeg" width="300" height="200" />
 * Somil Jain
-![Image](/Presentation-and-QnA/photos/Shradha.jpeg)
+<img src="/Presentation-and-QnA/photos/Shradha.jpeg" width="300" height="200" />
 * Shradha Khapra
-![Image](/Presentation-and-QnA/photos/Nishant.jpeg)
+<img src="/Presentation-and-QnA/photos/Nishant.jpeg" width="300" height="200" />
 * Nishant Aggarwal
-![Image](/Presentation-and-QnA/photos/Sabeel.jpeg)
+<img src="/Presentation-and-QnA/photos/Sabeel.jpeg" width="300" height="200" />
 * Sabeel Ahmad
-![Image](/Presentation-and-QnA/photos/Raghav.jpeg)
+<img src="/Presentation-and-QnA/photos/Raghav.jpeg" width="300" height="200" />
 * Raghav Dalmia
 
 

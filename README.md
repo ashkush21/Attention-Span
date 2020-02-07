@@ -14,7 +14,7 @@
 
 **Below is the demo video of the project**
 
-![Click here to watch](https://youtu.be/TLY_2xVosmM)
+![Click here to watch](https://www.youtube.com/watch?v=TLY_2xVosmM&feature=youtu.be)
 
 
 

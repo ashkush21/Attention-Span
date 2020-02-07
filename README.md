@@ -1,4 +1,4 @@
-* **This prototype uses pretrained model of OpenCV.js to recognize face in the camera frame.**
+* **The final deployed link of the project prototype: https://attention-span.now.sh**
 
 * **Follow the following steps to run the project:**
     * Open index.html file and then wait for the browser(preferably firefox) to ask camera and microphone permission.
@@ -14,17 +14,17 @@
 
 Project Developers - 
 
-<img src="/Presentation-and-QnA/photos/Ashish.jpg" width="300" height="250" />
+<img src="/Presentation-and-QnA/photos/Ashish.jpg" width="300" height="280" />
  **Ashish Kushwaha** 
-<img src="/Presentation-and-QnA/photos/Somil.jpeg" width="300" height="250" />
+<img src="/Presentation-and-QnA/photos/Somil.jpeg" width="300" height="280" />
  **Somil Jain**
-<img src="/Presentation-and-QnA/photos/Shradha.jpeg" width="300" height="250" />
+<img src="/Presentation-and-QnA/photos/Shradha.jpeg" width="300" height="280" />
  **Shradha Khapra**
-<img src="/Presentation-and-QnA/photos/Nishant.jpeg" width="300" height="250" />
+<img src="/Presentation-and-QnA/photos/Nishant.jpeg" width="300" height="280" />
  **Nishant Aggarwal**
-<img src="/Presentation-and-QnA/photos/Sabeel.jpeg" width="300" height="250" />
+<img src="/Presentation-and-QnA/photos/Sabeel.jpeg" width="300" height="280" />
  **Sabeel Ahmad**
-<img src="/Presentation-and-QnA/photos/Raghav.jpeg" width="300" height="250" />
+<img src="/Presentation-and-QnA/photos/Raghav.jpeg" width="300" height="280" />
  **Raghav Dalmia**
 
 

@@ -14,17 +14,17 @@
 
 Project Developers - 
 
-<img src="/Presentation-and-QnA/photos/Ashish.jpg" width="350" height="200" />
+<img src="/Presentation-and-QnA/photos/Ashish.jpg" width="300" height="250" />
  **Ashish Kushwaha** 
-<img src="/Presentation-and-QnA/photos/Somil.jpeg" width="350" height="200" />
+<img src="/Presentation-and-QnA/photos/Somil.jpeg" width="300" height="250" />
  **Somil Jain**
-<img src="/Presentation-and-QnA/photos/Shradha.jpeg" width="350" height="200" />
+<img src="/Presentation-and-QnA/photos/Shradha.jpeg" width="300" height="250" />
  **Shradha Khapra**
-<img src="/Presentation-and-QnA/photos/Nishant.jpeg" width="350" height="200" />
+<img src="/Presentation-and-QnA/photos/Nishant.jpeg" width="300" height="250" />
  **Nishant Aggarwal**
-<img src="/Presentation-and-QnA/photos/Sabeel.jpeg" width="350" height="200" />
+<img src="/Presentation-and-QnA/photos/Sabeel.jpeg" width="300" height="250" />
  **Sabeel Ahmad**
-<img src="/Presentation-and-QnA/photos/Raghav.jpeg" width="350" height="200" />
+<img src="/Presentation-and-QnA/photos/Raghav.jpeg" width="300" height="250" />
  **Raghav Dalmia**
 
 
